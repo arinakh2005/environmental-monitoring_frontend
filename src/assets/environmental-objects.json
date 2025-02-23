@@ -1,0 +1,161 @@
+{
+  "data": [
+    {
+      "name": "Станція моніторингу стану повітря",
+      "identifier": "Черкаська міська рада",
+      "address": "м. Черкаси, вул. Байди-Вишневецького, 36",
+      "coordinates": "49°26'40\" 32°3'26\"",
+      "subsystemType": "air_quality",
+      "subsystemDescription": "Моніторинг якості повітря",
+      "indicatorsTitle": "Індикатори стану повітря",
+      "indicators": [
+        {"name": "Пил 2.5 мкм", "value": "8.0125 мкг/м³"},
+        {"name": "Пил 10 мкм", "value": "13.325 мкг/м³"},
+        {"name": "Відносна вологість", "value": "69%"},
+        {"name": "Атмосферний тиск", "value": "770 мм.рт.ст"},
+        {"name": "Аміак", "value": "0 мкг/м³"}
+      ]
+    },
+    {
+      "name": "Станція моніторингу стану повітря",
+      "address": "м. Черкаси, провулок Січовий, 17",
+      "coordinates": "49°25'43\" 32°3'60\"",
+      "subsystemType": "air_quality",
+      "subsystemDescription": "Моніторинг якості повітря",
+      "indicatorsTitle": "Індикатори стану повітря",
+      "indicators": [
+        {"name": "Пил 2.5 мкм", "value": "7.1 мкг/м"},
+        {"name": "Пил 10 мкм", "value": "13.4 мкг/м³"},
+        {"name": "Відносна вологість", "value": "67%"},
+        {"name": "Атмосферний тиск", "value": "779 мм.рт.ст"},
+        {"name": "Аміак", "value": "0 мкг/м³"}
+      ]
+    },
+    {
+      "name": "Пост контролю радіаційного стану",
+      "identifier": "Управління Державної служби України з НС",
+      "address": "м. Черкаси, вул. Чигиринська, 5",
+      "coordinates": "49°24'58\" 32°6'2\"",
+      "subsystemType": "radiation",
+      "subsystemDescription": "Моніторинг радіаційного випромінювання",
+      "indicatorsTitle": "Індикатори стану повітря",
+      "indicators": [
+        {"name": "γ-Радіація", "value": "140 нЗв/год³"}
+      ]
+    },
+    {
+      "name": "Пост контролю радіаційного стану",
+      "identifier": "Навчальний пункт Аварійно-рятувального загону спеціального призначення Управління ДСНС України",
+      "address": "м. Черкаси, вул. Сумгаїтська, 4",
+      "coordinates": "49°26'30\" 32°1'26\"",
+      "subsystemType": "radiation",
+      "subsystemDescription": "Моніторинг радіаційного випромінювання",
+      "indicatorsTitle": "Індикатори стану повітря",
+      "indicators": [
+        {"name": "γ-Радіація", "value": "130 нЗв/год³"}
+      ]
+    },
+    {
+      "name": "р. Дніпро",
+      "address": "678 км, c. Сокирне (Кременчуцьке водосховище)",
+      "station_code": "UA_M5.1.2_0003_02",
+      "laboratory": "Басейнова лабораторія моніторингу вод МОЗМ дніпровських водосховищ",
+      "coordinates": "49°33'4\" 31°53'60\"",
+      "subsystemType": "coastal_water",
+      "subsystemDescription": "Моніторинг прибережних вод",
+      "indicatorsTitle": "Індикатори стану води",
+      "indicators": [
+        {"name": "Біохімічне споживання кисню за 5 діб, мгО2/дм3", "norm": "3", "value": "1.3", "meets_standard": true},
+        {"name": "Водневий показник, од.рН", "norm": "6.5 - 8.5", "value": "8.3", "meets_standard": true},
+        {"name": "Жорсткість, мг-екв/дм3", "norm": "7", "value": "4.1", "meets_standard": true},
+        {"name": "Завислі речовини, мг/дм3", "norm": "0 - 25", "value": "5", "meets_standard": true},
+        {"name": "Кисень розчинений, мгО2/дм3", "norm": ">= 4", "value": "12", "meets_standard": true},
+        {"name": "Прозорість, см", "norm": ">= 10", "value": "42", "meets_standard": true},
+        {"name": "Сухий залишок, мг/дм3", "norm": "1000", "value": "309", "meets_standard": true},
+        {"name": "Хімічне споживання кисню, мгО/дм3", "norm": "30", "value": "34", "meets_standard": false},
+        {"name": "Фосфор загальний, мг/дм3", "norm": "0.2", "value": "0.14", "meets_standard": true},
+        {"name": "Кальцій, мг/дм3", "norm": "200", "value": "66", "meets_standard": true},
+        {"name": "Магній, мг/дм3", "norm": "50", "value": "10", "meets_standard": true}
+      ]
+    },
+    {
+      "name": "р. Золотоношка",
+      "address": "18 км, с. Благодатне",
+      "station_code": "UA_M5.1.2_0774_01",
+      "laboratory": "Басейнова лабораторія моніторингу вод МОЗМ дніпровських водосховищ",
+      "coordinates": "49°34'32\" 32°4'38\"",
+      "subsystemType": "coastal_water",
+      "subsystemDescription": "Моніторинг прибережних вод",
+      "indicatorsTitle": "Індикатори стану води",
+      "indicators": [
+        {"name": "Арсен, мг/дм3", "norm": "0.05", "value": "0.01", "meets_standard": true},
+        {"name": "Кобальт, мг/дм3", "norm": "0.1", "value": "0.006", "meets_standard": true},
+        {"name": "Хром загальний, мг/дм3", "norm": "0.05", "value": "0.002", "meets_standard": true},
+        {"name": "Алахлор, мкг/дм3", "norm": "0.7", "value": "0", "meets_standard": true},
+        {"name": "Антрацен, мкг/дм3", "norm": "0.1", "value": "0", "meets_standard": true},
+        {"name": "Бензол, мкг/дм3", "norm": "50", "value": "0", "meets_standard": true}
+      ]
+    },
+    {
+      "name": "р. Вільшанка",
+      "address": "0 км, у межах с. Мліїв",
+      "station_code": "UA_M5.1.2_0754_01",
+      "laboratory": "Басейнова лабораторія моніторингу вод МОЗМ дніпровських водосховищ",
+      "coordinates": "49°20'22\" 31°30'52\"",
+      "subsystemType": "coastal_water",
+      "subsystemDescription": "Моніторинг прибережних вод",
+      "indicatorsTitle": "Індикатори стану води",
+      "indicators": [
+        {"name": "Арсен, мг/дм3", "norm": "0.05", "value": "0.01", "meets_standard": true},
+        {"name": "Кобальт, мг/дм3", "norm": "0.1", "value": "0.006", "meets_standard": true},
+        {"name": "Хром загальний, мг/дм3", "norm": "0.05", "value": "0.002", "meets_standard": true},
+        {"name": "Алахлор, мкг/дм33", "norm": "0.7", "value": "0", "meets_standard": true},
+        {"name": "Антрацен, мкг/дм3", "norm": "0.1", "value": "0", "meets_standard": true},
+        {"name": "Бензол, мкг/дм3", "norm": "50", "value": "0", "meets_standard": true}
+      ]
+    },
+    {
+      "name": "Черкаський міський зоологічний парк",
+      "address": "м.Черкаси, вул. Смілянська, 132",
+      "coordinates": "49°24'56\" 32°1'22\"",
+      "subsystemType": "biodiversity",
+      "subsystemDescription": "Моніторинг показників біологічного різноманіття",
+      "indicatorsTitle": "Показники біорізноманіття",
+      "indicators": [
+        {"name": "Кількість видів", "value": "понад 200"},
+        {"name": "Кількість особин", "value": "понад 3000"},
+        {"name": "Площа", "value": "9.21 га"}
+      ]
+    },
+    {
+      "name": "Державний дендрологічний парк «Софіївка»",
+      "address": "м. Умань, вул. Київська, 12а",
+      "coordinates": "48°45'47\" 30°13'21\"",
+      "subsystemType": "biodiversity",
+      "subsystemDescription": "Моніторинг показників біологічного різноманіття",
+      "indicatorsTitle": "Показники біорізноманіття",
+      "indicators": [
+        {"name": "Кількість видів рослин", "value": "понад 3500"},
+        {"name": "Рідкісні та екзотичні види дерев і кущів", "value": "понад 3000"},
+        {"name": "Водні екосистеми", "value": "стави, фонтани, підземна річка Ахеронт"},
+        {"name": "Птахи", "value": "лебеді, качки, чаплі, синиці, дятли"},
+        {"name": "Види риб у ставках", "value": "короп, товстолобик, щука"},
+        {"name": "Площа", "value": "179.2 га"}
+      ]
+    },
+    {
+      "name": "Національний природний парк «Холодний Яр»",
+      "address": "Чигиринський район, Черкаська область",
+      "coordinates": "49°8'4\" 32°14'20\"",
+      "subsystemType": "biodiversity",
+      "subsystemDescription": "Моніторинг показників біологічного різноманіття",
+      "indicatorsTitle": "Показники біорізноманіття",
+      "indicators": [
+        {"name": "Рослинний світ", "value": "понад 1000 видів, з них 58 – червонокнижні"},
+        {"name": "Лісові екосистеми", "value": "букові, дубові, грабові ліси"},
+        {"name": "Водні екосистеми", "value": "джерела, р. Тясмин, малі ставки"},
+        {"name": "Площа", "value": "6875 га"}
+      ]
+    }
+  ]
+}

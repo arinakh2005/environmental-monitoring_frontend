@@ -1,0 +1,28 @@
+@if (facility) {
+    <div class="facility-summary-container">
+        <h3 class="facility-summary-container-title">{{ facility.name }}</h3>
+        <div class="facility-summary-container-content">
+            @if (facility.identifier) {
+                <div><strong>Ідентифікатор:</strong> {{ facility.identifier }}</div>
+            }
+            @if (facility.station_code) {
+                <div><strong>Код станції:</strong> {{ facility.station_code }}</div>
+            }
+            @if (facility.laboratory) {
+                <div><strong>Лабораторія:</strong> {{ facility.laboratory }}</div>
+            }
+            <div><strong>Адреса:</strong> {{ facility.address }}</div>
+            <div><strong>Географічні координати:</strong> {{ facility.coordinates }}</div>
+            <div><strong>Підсистема:</strong> {{ facility.subsystemDescription }}</div>
+            <div><strong>{{ facility.indicatorsTitle }}:</strong></div>
+            <ul class="facility-summary-indicators-list">
+                @for (indicator of facility.indicators; track indicator.name) {
+                    <li class="facility-summary-indicator">
+                        <span class="indicator-name">{{ indicator.name }}</span>:
+                        <span class="indicator-value">{{ indicator.value }}</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+}

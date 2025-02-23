@@ -1,0 +1,34 @@
+.facility-summary-container-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #006666;
+    margin-bottom: 8px;
+}
+
+.facility-summary-container-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.facility-summary-indicators-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0 12px;
+    margin: 0;
+}
+
+.facility-summary-indicator {
+    margin: 0 8px;
+}
+
+.indicator-name {
+    font-weight: bold;
+    color: #004747;
+}
+
+.indicator-value {
+    font-weight: normal;
+    color: #333;
+}
