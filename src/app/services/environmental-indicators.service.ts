@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { EnvironmentalIndicator } from '../types/environmental-indicator';
 
 @Injectable()
-export class EnvironmentalIndicatorService {
+export class EnvironmentalIndicatorsService {
     private readonly API_URL = 'http://localhost:3000/environmental-indicators';
 
     constructor(private readonly httpClient: HttpClient) {}

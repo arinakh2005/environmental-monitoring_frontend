@@ -3,10 +3,14 @@
         <mat-toolbar class="toolbar-header">Підсистеми</mat-toolbar>
         <div class="layer-buttons">
             @for (layer of layers; track layer.key) {
-                <button mat-fab extended (click)="layer.isSelected = !layer.isSelected">
+                <button mat-fab extended
+                        [ngStyle]="{'border-left': '4px solid ' + markerColors.get(layer.key)}"
+                        (click)="toggleLayer(layer)"
+                >
                     @if (layer.isSelected) {
                         <mat-icon>check</mat-icon>
                     }
+                    <span class="color-dot" [ngStyle]="{'background-color': markerColors.get(layer.key)}"></span>
                     {{ layer.label }}
                 </button>
             }
@@ -20,7 +24,9 @@
             <span>Карта екологічного моніторингу</span>
         </mat-toolbar>
         <div class="content">
-            <app-environmental-map class="environmental-map"></app-environmental-map>
+            <app-environmental-map class="environmental-map"
+                                   [environmentalFacilities]="environmentalFacilities"
+            ></app-environmental-map>
             <button mat-mini-fab class="add-button" [matMenuTriggerFor]="menu">
                 <mat-icon>settings</mat-icon>
             </button>
