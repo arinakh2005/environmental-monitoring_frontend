@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EnvironmentalFacility } from '../environmental-facilities.models';
+import { EnvironmentalFacility } from '../../types/environmental-facility';
 
 @Component({
     selector: 'app-facility-summary',

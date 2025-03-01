@@ -1,3 +1,5 @@
+import { EnvironmentalIndicator } from './environmental-indicator';
+
 export type EnvironmentalFacility = {
     name: string,
     identifier?: string,
@@ -9,9 +11,4 @@ export type EnvironmentalFacility = {
     subsystemDescription: string,
     indicatorsTitle: string,
     indicators: EnvironmentalIndicator[],
-}
-
-export type EnvironmentalIndicator = {
-    name: string,
-    value: string,
 }

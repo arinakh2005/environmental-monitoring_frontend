@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { EnvironmentalFacilitiesComponent } from './components/environmental-facilities/environmental-facilities.component';
+import { EnvironmentalMapComponent } from './components/environmental-map/environmental-map.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
     imports: [
-        EnvironmentalFacilitiesComponent,
+        EnvironmentalMapComponent,
     ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',

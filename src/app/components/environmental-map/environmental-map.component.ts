@@ -6,18 +6,18 @@ import {
   OnInit,
 } from '@angular/core';
 import * as L from 'leaflet';
-import { EnvironmentalFacility } from './environmental-facilities.models';
 import { HttpClient } from '@angular/common/http';
-import { FacilitySummaryComponent } from './facility-summary/facility-summary.component';
+import { FacilitySummaryComponent } from '../facility-summary-modal/facility-summary.component';
+import { EnvironmentalFacility } from '../../types/environmental-facility';
 
 @Component({
-    selector: 'app-environmental-facilities',
+    selector: 'app-environmental-map',
     standalone: true,
     imports: [],
-    templateUrl: './environmental-facilities.component.html',
-    styleUrl: './environmental-facilities.component.css',
+    templateUrl: './environmental-map.component.html',
+    styleUrl: './environmental-map.component.css',
 })
-export class EnvironmentalFacilitiesComponent implements OnInit {
+export class EnvironmentalMapComponent implements OnInit {
     public environmentalFacilities: EnvironmentalFacility[] = [];
     public map!: L.Map;
 
