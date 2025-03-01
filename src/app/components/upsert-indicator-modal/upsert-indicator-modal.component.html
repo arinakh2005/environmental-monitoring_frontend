@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>{{ form.get('id')?.value ? 'Редагування' : 'Додавання' }} індикатора</h2>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="flex-display-column px-16">
+        <mat-form-field class="example-full-width">
+            <mat-label>Об'єкт</mat-label>
+            <input type="text" matInput formControlName="facilityId" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                @for (facility of dataService.environmentalFacilities$.value; track facility.id) {
+                    <mat-option [value]="facility.id">{{ facility.name }}</mat-option>
+                }
+            </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Назва</mat-label>
+            <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Значення</mat-label>
+            <input matInput formControlName="value">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Дата</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions>
+        <button mat-button type="button" (click)="onCancel()">Відмінити</button>
+        <button mat-button color="primary" type="submit" [disabled]="form.invalid">Зберегти</button>
+    </div>
+</form>

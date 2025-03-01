@@ -1,14 +1,16 @@
 import {
-  ApplicationRef,
-  Component,
-  ComponentFactoryResolver,
-  ComponentRef, Injector,
-  OnInit,
+    ApplicationRef,
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef, Injector,
+    OnDestroy,
+    OnInit,
 } from '@angular/core';
 import * as L from 'leaflet';
-import { HttpClient } from '@angular/common/http';
 import { FacilitySummaryComponent } from '../facility-summary-modal/facility-summary.component';
 import { EnvironmentalFacility } from '../../types/environmental-facility';
+import { DataService } from '../../services/data.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-environmental-map',
@@ -17,24 +19,27 @@ import { EnvironmentalFacility } from '../../types/environmental-facility';
     templateUrl: './environmental-map.component.html',
     styleUrl: './environmental-map.component.css',
 })
-export class EnvironmentalMapComponent implements OnInit {
-    public environmentalFacilities: EnvironmentalFacility[] = [];
+export class EnvironmentalMapComponent implements OnInit, OnDestroy {
     public map!: L.Map;
 
     private facilitySummaryComponentRef?: ComponentRef<FacilitySummaryComponent>;
+    private _subscriptions: Subscription[] = [];
 
     constructor(
-        private readonly httpClient: HttpClient,
+        private readonly dataService: DataService,
         private readonly componentFactoryResolver: ComponentFactoryResolver,
         private readonly injector: Injector,
         private readonly appRef: ApplicationRef,
     ) { }
 
     public ngOnInit(): void {
-        this.httpClient.get<any>('http://localhost:3000/environmental-facilities').subscribe((result: EnvironmentalFacility[]) => {
-            this.environmentalFacilities = [...result];
-            this.initializeMap();
-        });
+        this._subscriptions.push(this.dataService.environmentalFacilities$.subscribe((data) => {
+            if (data) this.initializeMap();
+        }));
+    }
+
+    public ngOnDestroy(): void {
+        this._subscriptions.forEach((subscription) => subscription.unsubscribe());
     }
 
     private initializeMap(): void {
@@ -63,7 +68,7 @@ export class EnvironmentalMapComponent implements OnInit {
         this.map = L.map('map');
         L.tileLayer(baseMapURl).addTo(this.map);
 
-        this.environmentalFacilities.forEach((facility) => {
+        this.dataService.environmentalFacilities$.value.forEach((facility) => {
             const coordinates = this.getParseCoordinates(facility.coordinates);
             if (coordinates) {
                 const color = markerColors[facility.subsystemType] || 'gray';

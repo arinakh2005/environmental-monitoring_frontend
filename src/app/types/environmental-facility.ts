@@ -1,6 +1,7 @@
 import { EnvironmentalIndicator } from './environmental-indicator';
 
 export type EnvironmentalFacility = {
+    id?: string | number,
     name: string,
     identifier?: string,
     station_code?: string,
