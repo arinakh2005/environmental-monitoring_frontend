@@ -44,7 +44,7 @@ export class AppComponent implements OnInit, OnDestroy {
         { key: EnvironmentalSubsystem.AirQuality, label: 'Якість повітря', isSelected: false },
         { key: EnvironmentalSubsystem.Radiation, label: 'Радіація', isSelected: false },
         { key: EnvironmentalSubsystem.CoastalWater, label: 'Прибережні води', isSelected: false },
-        { key: EnvironmentalSubsystem.Biodiversity, label: 'Біорізноманіття', isSelected: false }
+        { key: EnvironmentalSubsystem.Biodiversity, label: 'Біорізноманіття', isSelected: false },
     ];
     public environmentalFacilities: EnvironmentalFacility[] = [];
     public isSidenavOpened: boolean = true;

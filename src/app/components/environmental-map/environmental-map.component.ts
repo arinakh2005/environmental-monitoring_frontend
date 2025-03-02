@@ -113,8 +113,12 @@ export class EnvironmentalMapComponent implements OnChanges {
 
         const popupElement = (componentRef.hostView as any).rootNodes[0];
 
-        L.popup({minWidth: 300, maxWidth: 400, offset: [0, 0]})
-            .setLatLng(marker.getLatLng())
+        L.popup({
+            minWidth: 425,
+            maxWidth: 600,
+            keepInView: true,
+            offset: [0, 0],
+        }).setLatLng(marker.getLatLng())
             .setContent(popupElement)
             .openOn(this.map);
         this.facilitySummaryComponentRef = componentRef;

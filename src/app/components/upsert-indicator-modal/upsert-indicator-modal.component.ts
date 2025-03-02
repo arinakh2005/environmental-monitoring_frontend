@@ -12,13 +12,12 @@ import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { EnvironmentalIndicator } from '../../types/environmental-indicator';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
-import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
-import { MAT_DATE_LOCALE, MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
 import { EnvironmentalIndicatorsService } from '../../services/environmental-indicators.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EnvironmentalFacilitiesService } from '../../services/environmental-facilities.service';
 import { EnvironmentalFacility } from '../../types/environmental-facility';
 import { Subscription } from 'rxjs';
+import { EnvironmentalSubsystem } from '../../enums/environmental-subsystem';
 
 @Component({
     selector: 'app-upsert-indicator-modal',
@@ -35,15 +34,9 @@ import { Subscription } from 'rxjs';
         MatAutocomplete,
         MatAutocompleteTrigger,
         MatOption,
-        MatDatepickerToggle,
-        MatDatepickerInput,
-        MatDatepicker,
-        MatNativeDateModule,
         MatFormFieldModule,
     ],
     providers: [
-        provideNativeDateAdapter(),
-        { provide: MAT_DATE_LOCALE, useValue: 'uk-UA' },
         EnvironmentalIndicatorsService,
         EnvironmentalFacilitiesService,
     ],
@@ -53,6 +46,12 @@ import { Subscription } from 'rxjs';
 export class UpsertIndicatorModalComponent implements OnInit, OnDestroy {
     public form: FormGroup;
     public environmentalFacilities: EnvironmentalFacility[] = [];
+    public subsystemTypes: { label: string, value: EnvironmentalSubsystem }[] = [
+        { value: EnvironmentalSubsystem.AirQuality, label: 'Якість повітря' },
+        { value: EnvironmentalSubsystem.Radiation, label: 'Радіація' },
+        { value: EnvironmentalSubsystem.CoastalWater, label: 'Прибережні води' },
+        { value: EnvironmentalSubsystem.Biodiversity, label: 'Біорізноманіття' },
+    ];
 
     private _subscriptions: Subscription[] = [];
 
@@ -68,9 +67,7 @@ export class UpsertIndicatorModalComponent implements OnInit, OnDestroy {
         this.form = this.formBuilder.group({
             id: [environmentalIndicator.id],
             name: [environmentalIndicator.name, Validators.required],
-            value: [environmentalIndicator.value, Validators.required],
-            date: [new Date(environmentalIndicator.date), Validators.required],
-            facilityId: [environmentalIndicator.facilityId, Validators.required],
+            subsystemType: [environmentalIndicator.subsystemType, Validators.required],
         });
     }
 
@@ -84,12 +81,12 @@ export class UpsertIndicatorModalComponent implements OnInit, OnDestroy {
         this._subscriptions.forEach((subscription) => subscription.unsubscribe());
     }
 
-    public displayFn = (facilityId: number | string) => {
-        if (!facilityId) return '';
+    public displaySubsystemFn = (subsystemValue: EnvironmentalSubsystem) => {
+        if (!subsystemValue) return '';
 
-        return this.environmentalFacilities.find((environmentalFacility) =>
-            environmentalFacility.id === facilityId,
-        )?.name || '';
+        return this.subsystemTypes.find((type) =>
+            type.value === subsystemValue,
+        )?.label || '';
     }
 
     public onSubmit(): void {

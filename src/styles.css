@@ -7,6 +7,15 @@ html, body {
 
 body {
     background-color: var(--mat-sys-background);
+
+    --mdc-extended-fab-container-height: 40px;
+    --mat-form-field-container-height: 40px;
+    --mat-form-field-subscript-text-line-height: 0px;
+    --mat-form-field-container-vertical-padding: 8px;
+    --mat-form-field-filled-with-label-container-padding-top: 16px;
+    --mat-form-field-filled-with-label-container-padding-bottom: 4px;
+    --mat-form-field-container-text-size: 13px;
+    --mdc-outlined-text-field-label-text-size: 13px;
 }
 
 .flex-display-column {
@@ -46,3 +55,34 @@ body {
     padding-top: 16px;
     padding-bottom: 16px;
 }
+
+.w-full {
+    width: 100%;
+}
+
+.pull-right {
+    float: right;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    background-color: var(--mat-sys-background) !important;
+}
+
+.leaflet-popup-content {
+    margin: 16px !important;
+}
+
+.leaflet-popup-close-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px !important;
+    height: 36px !important;
+
+    span {
+        font-size: 24px;
+        color: var(--mat-sys-on-primary-container);
+    }
+}
+

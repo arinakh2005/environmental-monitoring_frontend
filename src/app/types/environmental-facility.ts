@@ -1,4 +1,4 @@
-import { EnvironmentalIndicator } from './environmental-indicator';
+import { EnvironmentalFacilityIndicator } from './environmental-facility-indicator';
 
 export type EnvironmentalFacility = {
     id?: string | number,
@@ -11,5 +11,5 @@ export type EnvironmentalFacility = {
     subsystemType: 'air_quality' | 'coastal_water' | 'biodiversity' | 'radiation',
     subsystemDescription: string,
     indicatorsTitle: string,
-    indicators: EnvironmentalIndicator[],
+    facilityIndicators: EnvironmentalFacilityIndicator[],
 }

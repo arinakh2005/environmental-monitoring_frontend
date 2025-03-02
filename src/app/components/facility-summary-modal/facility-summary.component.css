@@ -1,34 +1,77 @@
 .facility-summary-container-title {
     font-size: 18px;
     font-weight: bold;
-    color: #006666;
+    color: var(--mat-sys-primary);
     margin-bottom: 8px;
 }
 
-.facility-summary-container-content {
+.facility-summary-row {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--mat-sys-inverse-surface);
+}
+
+.facility-summary-form-row:first-of-type {
+    padding-top: 20px;
+}
+
+.attribute-name {
+    font-weight: bold;
+    color: var(--mat-sys-primary);
+}
+
+.attribute-value {
+    font-weight: normal;
+    color: var(--mat-sys-secondary);
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
     gap: 8px;
 }
 
-.facility-summary-indicators-list {
+.facility-summary-indicators-block {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding: 0 12px;
-    margin: 0;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 12px;
 }
 
-.facility-summary-indicator {
-    margin: 0 8px;
+.facility-summary-indicators-form-list {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 8px;
+}
+
+.edit-button {
+    margin-top: 12px;
+}
+
+.facility-summary-indicator-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.facility-summary-indicator__view-mode {
+    display: list-item;
+    margin: 0 0 0 24px;
+    color: var(--mat-sys-secondary);
+}
+
+.facility-summary-indicator__edit-mode {
+    display: flex;
+    width: 100%;
+    gap: 8px;
 }
 
 .indicator-name {
     font-weight: bold;
-    color: #004747;
-}
-
-.indicator-value {
-    font-weight: normal;
-    color: #333;
+    padding: 0 4px 0 0;
 }
