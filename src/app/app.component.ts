@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { EnvironmentalMapComponent } from './components/environmental-map/environmental-map.component';
 import { MatButtonModule, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { UpsertIndicatorModalComponent } from './components/upsert-indicator-modal/upsert-indicator-modal.component';
@@ -13,8 +13,12 @@ import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
 import { EnvironmentalFacility } from './types/environmental-facility';
 import { EnvironmentalFacilitiesService } from './services/environmental-facilities.service';
 import { Subscription } from 'rxjs';
-import { markerColors } from './constants/constants';
+import { environmentalSubsystemColors } from './constants/constants';
 import { CommonModule } from '@angular/common';
+import {
+    EnvironmentalIndicatorChartComponent
+} from './components/environmental-indicator-chart/environmental-indicator-chart.component';
+import { EnvironmentalFacilityIndicator } from './types/environmental-facility-indicator';
 
 @Component({
     selector: 'app-root',
@@ -34,6 +38,7 @@ import { CommonModule } from '@angular/common';
         MatMenuItem,
         MatMenuTrigger,
         CommonModule,
+        EnvironmentalIndicatorChartComponent,
     ],
     providers: [EnvironmentalFacilitiesService],
     templateUrl: './app.component.html',
@@ -47,10 +52,14 @@ export class AppComponent implements OnInit, OnDestroy {
         { key: EnvironmentalSubsystem.Biodiversity, label: 'Біорізноманіття', isSelected: false },
     ];
     public environmentalFacilities: EnvironmentalFacility[] = [];
+    public selectedFacility: EnvironmentalFacility | null = null;
+    public selectedFacilityIndicator: EnvironmentalFacilityIndicator | null = null;
     public isSidenavOpened: boolean = true;
-    public markerColors: Map<EnvironmentalSubsystem, string> = markerColors;
+    public environmentalSubsystemColors: Map<EnvironmentalSubsystem, string> = environmentalSubsystemColors;
 
     private _subscriptions: Subscription[] = [];
+
+    @ViewChild('indicatorChartBlockRef', { static: false }) indicatorChartBlockRef!: ElementRef;
 
     constructor(
         private readonly dialog: MatDialog,
@@ -63,6 +72,19 @@ export class AppComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy() {
         this._subscriptions.forEach((subscription) => subscription.unsubscribe());
+    }
+
+    public onSelectFacility(facility: EnvironmentalFacility | null) {
+        this.selectedFacility = facility;
+    }
+
+    public onSelectFacilityIndicator(facilityIndicator: EnvironmentalFacilityIndicator | null) {
+        this.selectedFacilityIndicator = facilityIndicator;
+        setTimeout(() => {
+            if (this.indicatorChartBlockRef) {
+                this.indicatorChartBlockRef.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 100);
     }
 
     public openIndicatorDialog(): void {

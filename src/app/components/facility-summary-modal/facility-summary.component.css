@@ -61,6 +61,7 @@
 
 .facility-summary-indicator__view-mode {
     display: list-item;
+    height: 24px;
     margin: 0 0 0 24px;
     color: var(--mat-sys-secondary);
 }
@@ -74,4 +75,10 @@
 .indicator-name {
     font-weight: bold;
     padding: 0 4px 0 0;
+}
+
+.chart-icon {
+    padding: 0 8px;
+    vertical-align: bottom;
+    cursor: pointer;
 }

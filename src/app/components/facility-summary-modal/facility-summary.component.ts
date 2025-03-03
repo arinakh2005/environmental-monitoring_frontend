@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { EnvironmentalFacility } from '../../types/environmental-facility';
 import { MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
 import { EnvironmentalFacilitiesService } from '../../services/environmental-facilities.service';
@@ -48,6 +48,8 @@ import { EnvironmentalFacilityIndicator } from '../../types/environmental-facili
 })
 export class FacilitySummaryComponent implements OnInit, OnDestroy {
     @Input() facility!: EnvironmentalFacility;
+
+    @Output() bySelectFacilityIndicator: EventEmitter<EnvironmentalFacilityIndicator> = new EventEmitter();
 
     public isEditMode = false;
     public editedFacility: Partial<EnvironmentalFacility> = { };
@@ -146,5 +148,9 @@ export class FacilitySummaryComponent implements OnInit, OnDestroy {
 
     public removeIndicator(index: number): void {
         this.editedFacility.facilityIndicators?.splice(index, 1);
+    }
+
+    public showIndicatorChart(facilityIndicator: EnvironmentalFacilityIndicator): void {
+        this.bySelectFacilityIndicator.emit(facilityIndicator);
     }
 }

@@ -2,12 +2,14 @@ import {
     ApplicationRef,
     Component,
     ComponentFactoryResolver,
-    ComponentRef, Injector, Input, OnChanges,
+    ComponentRef, EventEmitter, Injector, Input, OnChanges, Output,
     SimpleChanges,
 } from '@angular/core';
 import * as L from 'leaflet';
 import { FacilitySummaryComponent } from '../facility-summary-modal/facility-summary.component';
 import { EnvironmentalFacility } from '../../types/environmental-facility';
+import { Subscription } from 'rxjs';
+import { EnvironmentalFacilityIndicator } from '../../types/environmental-facility-indicator';
 
 @Component({
     selector: 'app-environmental-map',
@@ -19,9 +21,14 @@ import { EnvironmentalFacility } from '../../types/environmental-facility';
 export class EnvironmentalMapComponent implements OnChanges {
     @Input() environmentalFacilities: EnvironmentalFacility[] = [];
 
+    @Output() bySelectFacility: EventEmitter<EnvironmentalFacility | null> = new EventEmitter();
+    @Output() bySelectFacilityIndicator: EventEmitter<EnvironmentalFacilityIndicator | null> = new EventEmitter();
+
     public map!: L.Map;
 
-    private facilitySummaryComponentRef?: ComponentRef<FacilitySummaryComponent>;
+    private _facilitySummaryComponentRef?: ComponentRef<FacilitySummaryComponent>;
+    private _selectFacilitySubscription: Subscription | null = null;
+    private _selectFacilityIndicatorSubscription: Subscription | null = null;
 
     constructor(
         private readonly componentFactoryResolver: ComponentFactoryResolver,
@@ -100,15 +107,21 @@ export class EnvironmentalMapComponent implements OnChanges {
     }
 
     private openFacilitySummaryPopup(marker: L.Marker, facility: EnvironmentalFacility): void {
-        if (this.facilitySummaryComponentRef) {
-            this.appRef.detachView(this.facilitySummaryComponentRef.hostView);
-            this.facilitySummaryComponentRef.destroy();
+        if (this._facilitySummaryComponentRef) {
+            this.appRef.detachView(this._facilitySummaryComponentRef.hostView);
+            this._selectFacilitySubscription?.unsubscribe();
+            this._selectFacilityIndicatorSubscription?.unsubscribe();
+            this._facilitySummaryComponentRef.destroy();
         }
 
         const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FacilitySummaryComponent);
         const componentRef = componentFactory.create(this.injector);
 
         componentRef.instance.facility = facility;
+
+        this._selectFacilityIndicatorSubscription = componentRef.instance.bySelectFacilityIndicator.subscribe((selectedFacilityIndicator: EnvironmentalFacilityIndicator) => {
+            this.bySelectFacilityIndicator.emit(selectedFacilityIndicator);
+        });
         this.appRef.attachView(componentRef.hostView);
 
         const popupElement = (componentRef.hostView as any).rootNodes[0];
@@ -116,11 +129,12 @@ export class EnvironmentalMapComponent implements OnChanges {
         L.popup({
             minWidth: 425,
             maxWidth: 600,
-            keepInView: true,
             offset: [0, 0],
         }).setLatLng(marker.getLatLng())
             .setContent(popupElement)
             .openOn(this.map);
-        this.facilitySummaryComponentRef = componentRef;
+
+        this._facilitySummaryComponentRef = componentRef;
+        this.bySelectFacility.emit(facility);
     }
 }

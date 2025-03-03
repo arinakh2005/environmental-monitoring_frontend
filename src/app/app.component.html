@@ -4,13 +4,13 @@
         <div class="layer-buttons">
             @for (layer of layers; track layer.key) {
                 <button mat-fab extended
-                        [ngStyle]="{'border-left': '4px solid ' + markerColors.get(layer.key)}"
+                        [ngStyle]="{'border-left': '4px solid ' + environmentalSubsystemColors.get(layer.key)}"
                         (click)="toggleLayer(layer)"
                 >
                     @if (layer.isSelected) {
                         <mat-icon>check</mat-icon>
                     }
-                    <span class="color-dot" [ngStyle]="{'background-color': markerColors.get(layer.key)}"></span>
+                    <span class="color-dot" [ngStyle]="{'background-color': environmentalSubsystemColors.get(layer.key)}"></span>
                     {{ layer.label }}
                 </button>
             }
@@ -26,11 +26,20 @@
         <div class="content">
             <app-environmental-map class="environmental-map"
                                    [environmentalFacilities]="environmentalFacilities"
+                                   (bySelectFacility)="onSelectFacility($event)"
+                                   (bySelectFacilityIndicator)="onSelectFacilityIndicator($event)"
             ></app-environmental-map>
             <button mat-mini-fab class="add-button" [matMenuTriggerFor]="menu">
                 <mat-icon>settings</mat-icon>
             </button>
         </div>
+        @if (selectedFacilityIndicator) {
+            <div class="indicator-chart" #indicatorChartBlockRef>
+                <app-environmental-indicator-chart [facilityId]="+selectedFacility!.id!"
+                                                   [facilityIndicator]="selectedFacilityIndicator"
+                ></app-environmental-indicator-chart>
+            </div>
+        }
     </mat-sidenav-content>
 </mat-sidenav-container>
 

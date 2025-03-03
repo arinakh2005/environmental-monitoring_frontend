@@ -43,6 +43,13 @@
     height: calc(100% - 56px);
 }
 
+.indicator-chart {
+    display: block;
+    width: 80%;
+    margin: auto auto 16px;
+    padding: 16px;
+}
+
 .add-button {
     margin: 8px;
     float: right;
