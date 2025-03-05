@@ -25,6 +25,7 @@
         </mat-toolbar>
         <div class="content">
             <app-environmental-map class="environmental-map"
+                                   [layers]="layers"
                                    [environmentalFacilities]="environmentalFacilities"
                                    (bySelectFacility)="onSelectFacility($event)"
                                    (bySelectFacilityIndicator)="onSelectFacilityIndicator($event)"
@@ -44,12 +45,16 @@
 </mat-sidenav-container>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-        <mat-icon>add_location_alt</mat-icon>
-        <span>Додати об'єкт</span>
-    </button>
-    <button mat-menu-item (click)="openIndicatorDialog()">
-        <mat-icon>new_label</mat-icon>
-        <span>Додати індикатор</span>
+<!--    <button mat-menu-item>-->
+<!--        <mat-icon>add_location_alt</mat-icon>-->
+<!--        <span>Додати об'єкт</span>-->
+<!--    </button>-->
+<!--    <button mat-menu-item (click)="openIndicatorDialog()">-->
+<!--        <mat-icon>new_label</mat-icon>-->
+<!--        <span>Додати індикатор</span>-->
+<!--    </button>-->
+    <button mat-menu-item (click)="openSettingsDialog()">
+        <mat-icon>visibility</mat-icon>
+        <span>Видимість показників</span>
     </button>
 </mat-menu>

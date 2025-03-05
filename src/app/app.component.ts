@@ -15,10 +15,10 @@ import { EnvironmentalFacilitiesService } from './services/environmental-facilit
 import { Subscription } from 'rxjs';
 import { environmentalSubsystemColors } from './constants/constants';
 import { CommonModule } from '@angular/common';
-import {
-    EnvironmentalIndicatorChartComponent
-} from './components/environmental-indicator-chart/environmental-indicator-chart.component';
+import { EnvironmentalIndicatorChartComponent } from './components/environmental-indicator-chart/environmental-indicator-chart.component';
 import { EnvironmentalFacilityIndicator } from './types/environmental-facility-indicator';
+import { IndicatorSettingsModalComponent } from './components/indicator-settings-modal/indicator-settings-modal.component';
+import { EnvironmentalIndicatorsService } from './services/environmental-indicators.service';
 
 @Component({
     selector: 'app-root',
@@ -40,7 +40,10 @@ import { EnvironmentalFacilityIndicator } from './types/environmental-facility-i
         CommonModule,
         EnvironmentalIndicatorChartComponent,
     ],
-    providers: [EnvironmentalFacilitiesService],
+    providers: [
+        EnvironmentalFacilitiesService,
+        EnvironmentalIndicatorsService,
+    ],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
 })
@@ -63,11 +66,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly dialog: MatDialog,
-        private readonly facilityService: EnvironmentalFacilitiesService,
+        private readonly facilitiesService: EnvironmentalFacilitiesService,
+        private readonly indicatorsService: EnvironmentalIndicatorsService,
     ) { }
 
     public ngOnInit() {
         this.loadFacilities();
+        this.loadIndicators();
     }
 
     public ngOnDestroy() {
@@ -95,6 +100,19 @@ export class AppComponent implements OnInit, OnDestroy {
         });
     }
 
+    public openSettingsDialog(): void {
+        const dialogRef = this.dialog.open(IndicatorSettingsModalComponent, {
+            width: '400px',
+            data: this.layers,
+        });
+
+        dialogRef.afterClosed().subscribe((updatedIndicators) => {
+            if (updatedIndicators) {
+                this.layers = updatedIndicators;
+            }
+        });
+    }
+
     public toggleSidenav(): void {
         this.isSidenavOpened = !this.isSidenavOpened;
     }
@@ -109,8 +127,17 @@ export class AppComponent implements OnInit, OnDestroy {
             .filter((layer: EnvironmentalLayer) => layer.isSelected)
             .map((layer) => layer.key);
 
-        this._subscriptions.push(this.facilityService.getAll(selectedFilters).subscribe((data) => {
+        this._subscriptions.push(this.facilitiesService.getAll(selectedFilters).subscribe((data) => {
             this.environmentalFacilities = data;
+        }));
+    }
+
+    private loadIndicators(): void {
+        this._subscriptions.push(this.indicatorsService.getIndicators().subscribe((data) => {
+            this.layers.map((layer) => {
+                layer.indicators = data.filter((indicator) => indicator.subsystemType === layer.key);
+                layer.indicators.forEach((indicator) => { indicator.isVisible = true });
+            });
         }));
     }
 }

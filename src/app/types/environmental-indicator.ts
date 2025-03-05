@@ -5,4 +5,5 @@ export type EnvironmentalIndicator = {
     name: string,
     measurementUnit: string,
     subsystemType: EnvironmentalSubsystem,
+    isVisible?: boolean,
 }

@@ -15,6 +15,7 @@ import { EnvironmentalIndicatorsService } from '../../services/environmental-ind
 import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { EnvironmentalFacilityIndicator } from '../../types/environmental-facility-indicator';
+import { EnvironmentalLayer } from '../../types/environmental-layer';
 
 @Component({
     selector: 'app-facility-summary',
@@ -48,6 +49,7 @@ import { EnvironmentalFacilityIndicator } from '../../types/environmental-facili
 })
 export class FacilitySummaryComponent implements OnInit, OnDestroy {
     @Input() facility!: EnvironmentalFacility;
+    @Input() layers: EnvironmentalLayer[] = [];
 
     @Output() bySelectFacilityIndicator: EventEmitter<EnvironmentalFacilityIndicator> = new EventEmitter();
 
@@ -78,6 +80,15 @@ export class FacilitySummaryComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit() {
+        this.facility.facilityIndicators.forEach((facilityIndicator) => {
+            const relatedLayer = this.layers.find((layer) => layer.key === facilityIndicator.environmentalIndicator?.subsystemType);
+            const relatedIndicator = relatedLayer?.indicators?.find((layerIndicator) => layerIndicator.id === facilityIndicator.environmentalIndicator?.id);
+
+            if (facilityIndicator.environmentalIndicator) {
+                facilityIndicator.environmentalIndicator.isVisible = relatedIndicator?.isVisible;
+            }
+        });
+
         this._subscriptions.push(this.indicatorsService.getIndicators().subscribe((indicators) => {
             this.indicators.push(...indicators);
             this.filteredIndicators = [...this.indicators];

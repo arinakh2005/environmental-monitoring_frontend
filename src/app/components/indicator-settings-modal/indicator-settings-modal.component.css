@@ -1,0 +1,17 @@
+.indicator-list {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0;
+}
+
+.expand-icon {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.layer-header {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 4px 0;
+}

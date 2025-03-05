@@ -10,6 +10,7 @@ import { FacilitySummaryComponent } from '../facility-summary-modal/facility-sum
 import { EnvironmentalFacility } from '../../types/environmental-facility';
 import { Subscription } from 'rxjs';
 import { EnvironmentalFacilityIndicator } from '../../types/environmental-facility-indicator';
+import { EnvironmentalLayer } from '../../types/environmental-layer';
 
 @Component({
     selector: 'app-environmental-map',
@@ -19,6 +20,7 @@ import { EnvironmentalFacilityIndicator } from '../../types/environmental-facili
     styleUrl: './environmental-map.component.css',
 })
 export class EnvironmentalMapComponent implements OnChanges {
+    @Input() layers: EnvironmentalLayer[] = [];
     @Input() environmentalFacilities: EnvironmentalFacility[] = [];
 
     @Output() bySelectFacility: EventEmitter<EnvironmentalFacility | null> = new EventEmitter();
@@ -118,6 +120,7 @@ export class EnvironmentalMapComponent implements OnChanges {
         const componentRef = componentFactory.create(this.injector);
 
         componentRef.instance.facility = facility;
+        componentRef.instance.layers = this.layers;
 
         this._selectFacilityIndicatorSubscription = componentRef.instance.bySelectFacilityIndicator.subscribe((selectedFacilityIndicator: EnvironmentalFacilityIndicator) => {
             this.bySelectFacilityIndicator.emit(selectedFacilityIndicator);

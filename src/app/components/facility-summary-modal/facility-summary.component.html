@@ -82,15 +82,17 @@
                 }
             } @else {
                 @for (facilityIndicator of facility.facilityIndicators; track $index) {
-                    <div class="facility-summary-indicator__view-mode">
-                        <mat-label class="indicator-name">{{ facilityIndicator.environmentalIndicator?.name }}: </mat-label>
-                        <span class="indicator-value">{{ facilityIndicator.value }} {{ facilityIndicator.environmentalIndicator?.measurementUnit || '' }}</span>
-                        @if (facilityIndicator.environmentalIndicator?.measurementUnit) {
-                            <mat-icon class="chart-icon" (click)="showIndicatorChart(facilityIndicator)">
-                                bar_chart
-                            </mat-icon>
-                        }
-                    </div>
+                    @if (facilityIndicator.environmentalIndicator?.isVisible) {
+                        <div class="facility-summary-indicator__view-mode">
+                            <mat-label class="indicator-name">{{ facilityIndicator.environmentalIndicator?.name }}: </mat-label>
+                            <span class="indicator-value">{{ facilityIndicator.value }} {{ facilityIndicator.environmentalIndicator?.measurementUnit || '' }}</span>
+                            @if (facilityIndicator.environmentalIndicator?.measurementUnit) {
+                                <mat-icon class="chart-icon" (click)="showIndicatorChart(facilityIndicator)">
+                                    bar_chart
+                                </mat-icon>
+                            }
+                        </div>
+                    }
                 }
             }
         </div>
