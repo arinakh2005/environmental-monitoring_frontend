@@ -19,7 +19,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatInput} from '@angular/material/input';
 import { MatTooltip } from '@angular/material/tooltip';
 import { Subscription } from 'rxjs';
-import { aqiLevels } from '../../constants/constants';
+import { aqiLevels, radiationLevels, waterQualities } from '../../constants/constants';
 
 @Component({
     selector: 'app-facility-summary',
@@ -78,7 +78,11 @@ export class FacilitySummaryComponent implements OnInit, OnDestroy {
     ];
     public indicators: EnvironmentalIndicator[] = [];
     public aqiChartData: { labels: string[]; datasets: { data: number[]; backgroundColor: string[]; borderWidth: number }[] } | null = null;
+    public waterQualityChartData: { labels: string[]; datasets: { data: number[]; backgroundColor: string[]; borderWidth: number }[] } | null = null;
+    public radiationChartData: { labels: string[]; datasets: { data: number[]; backgroundColor: string[]; borderWidth: number }[] } | null = null;
     public aqiChartOptions: ChartOptions<'doughnut'> = { };
+    public waterQualityChartOptions: ChartOptions<'doughnut'> = { };
+    public radiationChartOptions: ChartOptions<'doughnut'> = { };
 
     public readonly EnvironmentalSubsystem = EnvironmentalSubsystem;
 
@@ -127,7 +131,64 @@ export class FacilitySummaryComponent implements OnInit, OnDestroy {
                     }
                 };
             }
+        } else if (this.facility.calculatedData?.totalConcentrationRatio) {
+            const waterQuality = Array.from(waterQualities.keys()).find((range) => this.facility.calculatedData!.totalConcentrationRatio! <= range);
+            const waterQualityInfo = waterQualities.get(waterQuality || 2);
+
+            if (waterQualityInfo) {
+                this.facility.extra = {
+                    waterQualityColor: waterQualityInfo.color,
+                    waterQualityLabel: waterQualityInfo.label,
+                    waterQualityDescription: waterQualityInfo.description,
+                };
+                this.waterQualityChartData = {
+                    labels: ['Water Quality'],
+                    datasets: [{
+                        data: [this.facility.calculatedData?.totalConcentrationRatio, 2 - this.facility.calculatedData?.totalConcentrationRatio],
+                        backgroundColor: [waterQualityInfo.color, '#E0E0E0'],
+                        borderWidth: 0,
+                    }]
+                };
+                this.waterQualityChartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    }
+                };
+            }
+        } else if (this.facility.subsystemType === EnvironmentalSubsystem.Radiation && this.facility.facilityIndicators[0]) {
+            const radiationRange = Array.from(radiationLevels.keys()).find((range) => +this.facility.facilityIndicators[0].value <= range);
+            const radiationInfo = radiationLevels.get(radiationRange || 0);
+
+            if (radiationInfo) {
+                this.facility.extra = {
+                    radiationColor: radiationInfo.color,
+                    radiationLabel: radiationInfo.label,
+                    radiationDescription: radiationInfo.description,
+                };
+                this.radiationChartData = {
+                    labels: ['Рівень радіації'],
+                    datasets: [{
+                        data: [+this.facility.facilityIndicators[0].value, 1000 - +this.facility.facilityIndicators[0].value],
+                        backgroundColor: [radiationInfo.color, '#E0E0E0'],
+                        borderWidth: 0,
+                    }]
+                };
+                this.radiationChartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    }
+                };
+            }
         }
+
 
         this._subscriptions.push(this.indicatorsService.getIndicators().subscribe((indicators) => {
             this.indicators.push(...indicators);

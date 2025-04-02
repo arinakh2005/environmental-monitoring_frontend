@@ -13,11 +13,18 @@ export type EnvironmentalFacility = {
     indicatorsTitle: string,
     calculatedData: {
         overallAqi?: number,
+        totalConcentrationRatio?: number,
     },
     facilityIndicators: EnvironmentalFacilityIndicator[],
     extra?: {
-        aqiColor: string,
-        aqiLabel: string,
-        aqiDescription: string,
+        aqiColor?: string,
+        aqiLabel?: string,
+        aqiDescription?: string,
+        waterQualityColor?: string,
+        waterQualityLabel?: string,
+        waterQualityDescription?: string,
+        radiationColor?: string,
+        radiationLabel?: string,
+        radiationDescription?: string,
     },
 }

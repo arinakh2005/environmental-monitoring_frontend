@@ -47,6 +47,58 @@
 
             </div>
         </div>
+    } @else if (facility.subsystemType === EnvironmentalSubsystem.CoastalWater && facility.calculatedData && facility.calculatedData.totalConcentrationRatio) {
+        <div class="facility-summary-row">
+            <div class="aqi-label">
+                <span class="attribute-name">Якість питної (водопровідної) води:&nbsp;&nbsp;</span>
+                <div class="aqi-value-info">
+                    <span class="attribute-value" [style.color]="facility.extra!.waterQualityColor">{{ facility.extra!.waterQualityLabel }}</span>
+                    <mat-icon class="aqi-description-icon"
+                              [style.color]="facility.extra!.waterQualityColor"
+                              [matTooltip]="facility.extra!.waterQualityDescription"
+                    >
+                        info
+                    </mat-icon>
+                </div>
+            </div>
+            <div class="aqi-chart-container">
+                    <span class="aqi-value" [style.color]="facility.extra!.waterQualityColor">
+                        {{ facility.calculatedData.totalConcentrationRatio | number: '1.1-1' }}
+                    </span>
+                <canvas baseChart
+                        [data]="waterQualityChartData!"
+                        [options]="waterQualityChartOptions"
+                        [type]="'doughnut'">
+                </canvas>
+
+            </div>
+        </div>
+    } @else if (facility.subsystemType === EnvironmentalSubsystem.Radiation && facility.facilityIndicators[0]) {
+        <div class="facility-summary-row">
+            <div class="aqi-label">
+                <span class="attribute-name">Рівень радіації:&nbsp;&nbsp;</span>
+                <div class="aqi-value-info">
+                    <span class="attribute-value" [style.color]="facility.extra!.radiationColor">{{ facility.extra!.radiationLabel }}</span>
+                    <mat-icon class="aqi-description-icon"
+                              [style.color]="facility.extra!.radiationColor"
+                              [matTooltip]="facility.extra!.radiationDescription"
+                    >
+                        info
+                    </mat-icon>
+                </div>
+            </div>
+            <div class="aqi-chart-container">
+                    <span class="aqi-value" [style.color]="facility.extra!.radiationColor">
+                        {{ facility.facilityIndicators[0].value | number: '1.0-0' }}
+                    </span>
+                <canvas baseChart
+                        [data]="radiationChartData!"
+                        [options]="radiationChartOptions"
+                        [type]="'doughnut'">
+                </canvas>
+
+            </div>
+        </div>
     }
 
     @if (isEditMode) {
@@ -114,14 +166,25 @@
                         <div class="facility-summary-indicator__view-mode">
                             <mat-label class="indicator-name">{{ facilityIndicator.environmentalIndicator?.name }}: </mat-label>
                             <span class="indicator-value">{{ facilityIndicator.value }} {{ facilityIndicator.environmentalIndicator?.measurementUnit || '' }}</span>
-                            @if (facilityIndicator.environmentalIndicator?.measurementUnit) {
-                                <mat-icon class="chart-icon" (click)="showIndicatorChart(facilityIndicator)">
-                                    bar_chart
+                            <div class="info-icons">
+                                @if (facilityIndicator.environmentalIndicator?.norm) {
+                                    @let isNorm = +facilityIndicator.value <= +facilityIndicator.environmentalIndicator!.norm!;
+                                    <mat-icon class="normative-icon"
+                                              [fontIcon]="isNorm ? 'check_circle' : 'cancel'"
+                                              [ngStyle]="{'color': (isNorm ? '#4CAF50' : '#D32F2F')}"
+                                              [matTooltip]="'Норматив: ' + facilityIndicator.environmentalIndicator!.norm! + ' ' + facilityIndicator.environmentalIndicator?.measurementUnit"
+                                    ></mat-icon>
+                                }
+
+                                @if (facilityIndicator.environmentalIndicator?.measurementUnit) {
+                                    <mat-icon class="chart-icon" (click)="showIndicatorChart(facilityIndicator)">
+                                        bar_chart
+                                    </mat-icon>
+                                }
+                                <mat-icon class="time-icon" [matTooltip]="'Виміряно: ' + (facilityIndicator.date | date:'dd.MM.yyyy HH:mm')">
+                                    schedule
                                 </mat-icon>
-                            }
-                            <mat-icon class="time-icon" [matTooltip]="'Виміряно: ' + (facilityIndicator.date | date:'dd.MM.yyyy HH:mm')">
-                                schedule
-                            </mat-icon>
+                            </div>
                         </div>
                     }
                 }
