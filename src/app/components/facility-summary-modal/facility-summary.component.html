@@ -119,6 +119,9 @@
                                     bar_chart
                                 </mat-icon>
                             }
+                            <mat-icon class="time-icon" [matTooltip]="'Виміряно: ' + (facilityIndicator.date | date:'dd.MM.yyyy HH:mm')">
+                                schedule
+                            </mat-icon>
                         </div>
                     }
                 }
