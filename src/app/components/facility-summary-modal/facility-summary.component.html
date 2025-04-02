@@ -21,6 +21,34 @@
         }
     }
 
+    @if (facility.subsystemType === EnvironmentalSubsystem.AirQuality && facility.calculatedData && facility.calculatedData.overallAqi) {
+        <div class="facility-summary-row">
+            <div class="aqi-label">
+                <span class="attribute-name">Рівень якості повітря:&nbsp;&nbsp;</span>
+                <div class="aqi-value-info">
+                    <span class="attribute-value" [style.color]="facility.extra!.aqiColor">{{ facility.extra!.aqiLabel }}</span>
+                    <mat-icon class="aqi-description-icon"
+                              [style.color]="facility.extra!.aqiColor"
+                              [matTooltip]="facility.extra!.aqiDescription"
+                    >
+                        info
+                    </mat-icon>
+                </div>
+            </div>
+            <div class="aqi-chart-container">
+                <span class="aqi-value" [style.color]="facility.extra!.aqiColor">
+                    {{ facility.calculatedData.overallAqi | number: '1.0-0' }}
+                </span>
+                <canvas baseChart
+                        [data]="aqiChartData!"
+                        [options]="aqiChartOptions"
+                        [type]="'doughnut'">
+                </canvas>
+
+            </div>
+        </div>
+    }
+
     @if (isEditMode) {
         <mat-form-field appearance="outline" class="w-full">
             <mat-label>Підсистема</mat-label>

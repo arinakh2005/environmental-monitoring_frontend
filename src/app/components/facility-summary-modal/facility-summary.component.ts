@@ -1,43 +1,49 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { EnvironmentalFacility } from '../../types/environmental-facility';
-import { MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
-import { EnvironmentalFacilitiesService } from '../../services/environmental-facilities.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EnvironmentalSubsystem } from '../../enums/environmental-subsystem';
-import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
-import { MatInput} from '@angular/material/input';
-import { MatIcon } from '@angular/material/icon';
-import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartOptions } from 'chart.js';
 import { CommonModule } from '@angular/common';
-import { EnvironmentalIndicator } from '../../types/environmental-indicator';
-import { Subscription } from 'rxjs';
-import { EnvironmentalIndicatorsService } from '../../services/environmental-indicators.service';
-import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
-import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { EnvironmentalFacilitiesService } from '../../services/environmental-facilities.service';
+import { EnvironmentalFacility } from '../../types/environmental-facility';
 import { EnvironmentalFacilityIndicator } from '../../types/environmental-facility-indicator';
+import { EnvironmentalIndicator } from '../../types/environmental-indicator';
+import { EnvironmentalIndicatorsService } from '../../services/environmental-indicators.service';
 import { EnvironmentalLayer } from '../../types/environmental-layer';
+import { EnvironmentalSubsystem } from '../../enums/environmental-subsystem';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
+import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
+import { MatDatepicker, MatDatepickerInput, MatDatepickerToggle } from '@angular/material/datepicker';
+import { MatFabButton, MatIconButton, MatMiniFabButton } from '@angular/material/button';
+import { MatFormField, MatLabel, MatSuffix } from '@angular/material/form-field';
+import { MatIcon } from '@angular/material/icon';
+import { MatInput} from '@angular/material/input';
+import { MatTooltip } from '@angular/material/tooltip';
+import { Subscription } from 'rxjs';
+import { aqiLevels } from '../../constants/constants';
 
 @Component({
     selector: 'app-facility-summary',
     standalone: true,
     imports: [
+        BaseChartDirective,
+        CommonModule,
         FormsModule,
-        MatFormField,
-        MatInput,
-        MatIcon,
-        MatLabel,
-        MatMiniFabButton,
-        MatFabButton,
-        ReactiveFormsModule,
         MatAutocomplete,
         MatAutocompleteTrigger,
-        MatOption,
-        MatIconButton,
-        CommonModule,
         MatDatepicker,
         MatDatepickerInput,
         MatDatepickerToggle,
+        MatFabButton,
+        MatFormField,
+        MatIcon,
+        MatIconButton,
+        MatInput,
+        MatLabel,
+        MatMiniFabButton,
+        MatOption,
         MatSuffix,
+        MatTooltip,
+        ReactiveFormsModule,
     ],
     providers: [
         EnvironmentalIndicatorsService,
@@ -71,6 +77,10 @@ export class FacilitySummaryComponent implements OnInit, OnDestroy {
         { key: 'coordinates', label: 'Географічні координати' },
     ];
     public indicators: EnvironmentalIndicator[] = [];
+    public aqiChartData: { labels: string[]; datasets: { data: number[]; backgroundColor: string[]; borderWidth: number }[] } | null = null;
+    public aqiChartOptions: ChartOptions<'doughnut'> = { };
+
+    public readonly EnvironmentalSubsystem = EnvironmentalSubsystem;
 
     private _subscriptions: Subscription[] = [];
 
@@ -88,6 +98,36 @@ export class FacilitySummaryComponent implements OnInit, OnDestroy {
                 facilityIndicator.environmentalIndicator.isVisible = relatedIndicator?.isVisible;
             }
         });
+
+        if (this.facility.calculatedData?.overallAqi) {
+            const aqiRange = Array.from(aqiLevels.keys()).find((range) => this.facility.calculatedData!.overallAqi! <= range);
+            const aqiInfo = aqiLevels.get(aqiRange || 50);
+
+            if (aqiInfo) {
+                this.facility.extra = {
+                    aqiColor: aqiInfo.color,
+                    aqiLabel: aqiInfo.label,
+                    aqiDescription: aqiInfo.description,
+                };
+                this.aqiChartData = {
+                    labels: ['AQI'],
+                    datasets: [{
+                        data: [this.facility.calculatedData?.overallAqi, 500 - this.facility.calculatedData?.overallAqi],
+                        backgroundColor: [aqiInfo!.color, '#E0E0E0'],
+                        borderWidth: 0,
+                    }]
+                };
+                this.aqiChartOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '75%',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: false }
+                    }
+                };
+            }
+        }
 
         this._subscriptions.push(this.indicatorsService.getIndicators().subscribe((indicators) => {
             this.indicators.push(...indicators);

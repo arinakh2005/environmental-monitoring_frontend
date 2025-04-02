@@ -11,5 +11,13 @@ export type EnvironmentalFacility = {
     subsystemType: 'air_quality' | 'coastal_water' | 'biodiversity' | 'radiation',
     subsystemDescription: string,
     indicatorsTitle: string,
+    calculatedData: {
+        overallAqi?: number,
+    },
     facilityIndicators: EnvironmentalFacilityIndicator[],
+    extra?: {
+        aqiColor: string,
+        aqiLabel: string,
+        aqiDescription: string,
+    },
 }
