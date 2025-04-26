@@ -1,0 +1,94 @@
+:host {
+    display: block;
+    padding: 16px;
+}
+
+:host ::ng-deep {
+    --mat-form-field-container-height: 56px;
+    --mat-form-field-filled-with-label-container-padding-top: 24px;
+}
+
+.header-block {
+    display: flex;
+    padding: 8px 0;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.export-buttons {
+    display: flex;
+    height: 100%;
+    gap: 16px;
+}
+
+.export-button mat-icon {
+    margin-right: 5px;
+}
+
+mat-form-field {
+    width: 300px;
+}
+
+mat-table {
+    overflow: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+}
+
+.mdc-data-table__cell {
+    padding: 8px 16px;
+    font-weight: 300;
+}
+
+.mat-mdc-header-cell {
+    line-height: 24px;
+    text-align: center;
+    font-size: 15px;
+    color: #FFABF3;
+}
+
+.mat-column-index {
+    min-width: 5%;
+    max-width: 5%;
+}
+
+.mat-column-subsystemType {
+    min-width: 10%;
+    max-width: 10%;
+}
+
+.mat-column-objectName {
+    min-width: 17%;
+    max-width: 17%;
+}
+
+.mat-column-protectionMeasureName {
+    min-width: 17%;
+    max-width: 17%;
+}
+
+.mat-column-estimatedFunding {
+    min-width: 11%;
+    max-width: 11%;
+}
+
+.mat-column-executionPeriod {
+    min-width: 7%;
+    max-width: 7%;
+}
+
+.mat-column-expectedEffect {
+    min-width: 11%;
+    max-width: 11%;
+}
+
+.mat-column-fundingSource {
+    min-width: 11%;
+    max-width: 11%;
+}
+
+.mat-column-executor {
+    min-width: 11%;
+    max-width: 11%;
+}

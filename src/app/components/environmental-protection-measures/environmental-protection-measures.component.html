@@ -1,0 +1,78 @@
+<div class="header-block">
+    <mat-form-field appearance="fill">
+        <mat-label>Підсистема</mat-label>
+        <input matInput
+               [matAutocomplete]="auto"
+               [(ngModel)]="selectedSubsystem"
+               (ngModelChange)="filterProtectionMeasures()">
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displaySubsystemFn">
+            @for (subsystem of subsystemTypes; track subsystem.value) {
+                <mat-option [value]="subsystem.value">{{ subsystem.label }}</mat-option>
+            }
+        </mat-autocomplete>
+    </mat-form-field>
+    <div class="export-buttons">
+        <button mat-fab extended (click)="exportToExcel()" class="export-button">
+            <mat-icon>file_download</mat-icon> Експортувати в Excel
+        </button>
+        <button mat-fab extended (click)="exportToDoc()" class="export-button">
+            <mat-icon>file_download</mat-icon> Експортувати в Doc
+        </button>
+    </div>
+</div>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="index">
+        <mat-header-cell *matHeaderCellDef> № </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index">
+            {{ i + 1 }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="subsystemType">
+        <mat-header-cell *matHeaderCellDef> Підсистема </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            {{ environmentalSubsystemLabels.get(element.subsystemType) }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="objectName">
+        <mat-header-cell *matHeaderCellDef> Назва об'єкта </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.objectName ?? '-' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="protectionMeasureName">
+        <mat-header-cell *matHeaderCellDef> Назва заходу </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.protectionMeasureName ?? '-' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="estimatedFunding">
+        <mat-header-cell *matHeaderCellDef> Орієнтовні обсяги фінансування, грн </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            {{ element.estimatedFunding !== null ? (element.estimatedFunding | number: '1.0-2') : '-' }}
+        </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="executionPeriod">
+        <mat-header-cell *matHeaderCellDef> Термін виконання </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.executionPeriod ?? '-' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="expectedEffect">
+        <mat-header-cell *matHeaderCellDef> Очікуваний ефект </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.expectedEffect ?? '-' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="fundingSource">
+        <mat-header-cell *matHeaderCellDef> Джерело фінансування </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.fundingSource ?? '-' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="executor">
+        <mat-header-cell *matHeaderCellDef> Відповідальні виконавці </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{ element.executor ?? '-' }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>

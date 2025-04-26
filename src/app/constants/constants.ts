@@ -7,6 +7,13 @@ export const environmentalSubsystemColors: Map<EnvironmentalSubsystem, string> =
     [EnvironmentalSubsystem.Radiation, '#ffe380'],
 ]);
 
+export const environmentalSubsystemLabels: Map<EnvironmentalSubsystem, string> = new Map([
+    [EnvironmentalSubsystem.AirQuality, 'Якість повітря'],
+    [EnvironmentalSubsystem.CoastalWater, 'Прибережні води'],
+    [EnvironmentalSubsystem.Biodiversity, 'Біорізноманіття'],
+    [EnvironmentalSubsystem.Radiation, 'Радіація'],
+]);
+
 export const aqiLevels: Map<number, { color: string, label: string, description: string }> = new Map([
     [50, { color: '#4CAF50', label: 'добрий', description: 'Якість повітря сприятлива, загроз для здоров’я немає.' }],
     [100, { color: '#FFEB3B', label: 'помірний', description: 'Якість повітря прийнятна, але у деяких людей може виникати дискомфорт.' }],

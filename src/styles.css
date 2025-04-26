@@ -16,6 +16,8 @@ body {
     --mat-form-field-filled-with-label-container-padding-bottom: 4px;
     --mat-form-field-container-text-size: 13px;
     --mdc-outlined-text-field-label-text-size: 13px;
+    --mat-table-background-color: #1e1a1d;
+    --mat-table-row-item-outline-color: #FFABF3;
 }
 
 .flex-display-column {
